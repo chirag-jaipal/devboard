@@ -3,6 +3,7 @@
 import { getCurrentUser } from "@/lib/auth";
 import { createProject } from "@/lib/services/project.service";
 import { CreateProjectSchema } from "@/schemas/project.schema";
+import { redirect } from "next/navigation";
 
 export async function createProjectAction(formData: FormData) {
   const rawData = {
@@ -32,4 +33,6 @@ export async function createProjectAction(formData: FormData) {
   };
 
   await createProject(projectData);
+
+  redirect("/dashboard/projects");
 }
