@@ -23,13 +23,15 @@ export default async function Page() {
     <div>
       {projects.map((project) => {
         return (
-          <ProjectCard
-            key={project.id}
-            title={project.title}
-            status={project.status}
-            createdAt={project.createdAt}
-            taskCount={project.taskCount}
-          />
+          <Link href={`/dashboard/projects/${project.id}`}>
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              status={project.status}
+              createdAt={project.createdAt}
+              taskCount={project.taskCount}
+            />
+          </Link>
         );
       })}
     </div>

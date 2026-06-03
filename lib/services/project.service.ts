@@ -45,3 +45,37 @@ export async function createProject(data: CreateProjectInput): Promise<void> {
     },
   });
 }
+
+export async function getProjectById(projectId: string, userId: string) {
+  const existingProject = await prisma.project.findFirst({
+    where: {
+      userId,
+      id: projectId,
+    },
+
+    select: {
+      id: true,
+      title: true,
+      description: true,
+      status: true,
+      createdAt: true,
+
+      _count: {
+        select: {
+          tasks: true,
+        },
+      },
+    },
+  });
+
+  if (!existingProject) return null;
+
+  return {
+    id: existingProject.id,
+    title: existingProject.title,
+    description: existingProject.description,
+    status: existingProject.status,
+    createdAt: existingProject.createdAt,
+    taskCount: existingProject._count.tasks,
+  };
+}
