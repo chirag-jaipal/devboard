@@ -14,7 +14,11 @@ export default async function DashboardPage() {
   const user = await getCurrentUser();
 
   if (!user) {
-    return <p>Please login.</p>;
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <p className="text-sm text-neutral-400">Please login to continue.</p>
+      </div>
+    );
   }
 
   const [stats, recentProjects, recentTasks, recentTodos] = await Promise.all([
@@ -25,9 +29,21 @@ export default async function DashboardPage() {
   ]);
 
   return (
-    <div>
-      <h1>Welcome, {user.name}</h1>
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div>
+        <p className="text-xs font-medium text-neutral-400 uppercase tracking-widest mb-1">
+          Overview
+        </p>
+        <h1 className="text-2xl font-semibold text-neutral-900 tracking-tight">
+          Welcome back, {user.name}
+        </h1>
+        <p className="text-sm text-neutral-400 mt-1">
+          Here&apos;s what&apos;s happening across your workspace.
+        </p>
+      </div>
 
+      {/* Stats */}
       <StatsGrid
         totalProjects={stats.totalProjects}
         activeProjects={stats.activeProjects}
@@ -36,17 +52,14 @@ export default async function DashboardPage() {
         totalTodos={stats.totalTodos}
       />
 
-      <hr />
+      {/* Bottom Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <RecentProjects projects={recentProjects} />
+        <RecentTodos todos={recentTodos} />
+      </div>
 
-      <RecentProjects projects={recentProjects} />
-
-      <hr />
-
+      {/* Tasks — full width */}
       <RecentTasks tasks={recentTasks} />
-
-      <hr />
-
-      <RecentTodos todos={recentTodos} />
     </div>
   );
 }
