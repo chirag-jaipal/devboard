@@ -23,7 +23,6 @@ export function RecentProjects({ projects }: RecentProjectsProps) {
             <Link href={`/dashboard/projects/${project.id}`}>
               {project.title}
             </Link>
-
             <p>{project.status}</p>
           </div>
         ))

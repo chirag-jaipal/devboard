@@ -104,3 +104,23 @@ export async function getRecentTasks(userId: string) {
     take: 5,
   });
 }
+
+export async function getRecentTodos(userId: string) {
+  return prisma.todo.findMany({
+    where: {
+      userId,
+    },
+
+    select: {
+      id: true,
+      title: true,
+      status: true,
+    },
+
+    orderBy: {
+      createdAt: "desc",
+    },
+
+    take: 5,
+  });
+}

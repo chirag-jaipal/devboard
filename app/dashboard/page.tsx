@@ -3,10 +3,12 @@ import {
   getDashboardStats,
   getRecentProjects,
   getRecentTasks,
+  getRecentTodos,
 } from "@/lib/services/dashboard.service";
 import { StatsGrid } from "@/components/dashboard/stats-grid";
 import { RecentProjects } from "@/components/dashboard/recent-projects";
 import { RecentTasks } from "@/components/dashboard/recent-tasks";
+import { RecentTodos } from "@/components/dashboard/recent-todos";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
@@ -15,10 +17,11 @@ export default async function DashboardPage() {
     return <p>Please login.</p>;
   }
 
-  const [stats, recentProjects, recentTasks] = await Promise.all([
+  const [stats, recentProjects, recentTasks, recentTodos] = await Promise.all([
     getDashboardStats(user.id),
     getRecentProjects(user.id),
     getRecentTasks(user.id),
+    getRecentTodos(user.id),
   ]);
 
   return (
@@ -40,6 +43,10 @@ export default async function DashboardPage() {
       <hr />
 
       <RecentTasks tasks={recentTasks} />
+
+      <hr />
+
+      <RecentTodos todos={recentTodos} />
     </div>
   );
 }
