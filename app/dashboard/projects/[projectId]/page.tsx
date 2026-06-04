@@ -1,11 +1,11 @@
 import { ProjectDetails } from "@/components/projects/project-details";
 import { getProjectById } from "@/lib/services/project.service";
-import { createTaskAction } from "@/app/actions/task.actions";
 import { getTasksByProjectId } from "@/lib/services/task.service";
 import { TaskCard } from "@/components/tasks/task-card";
 import { getCurrentUser } from "@/lib/auth";
 
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 type PageProps = {
   params: Promise<{
@@ -22,11 +22,7 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
   const project = await getProjectById(projectId, user.id);
   if (!project) notFound();
 
-  console.log(project.status);
-
   const tasks = await getTasksByProjectId(projectId, user.id);
-
-  const createTaskForProject = createTaskAction.bind(null, projectId);
 
   return (
     <div>
@@ -42,21 +38,9 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
 
       <hr />
 
-      <h2>Create Task</h2>
-
-      <form action={createTaskForProject}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input id="title" name="title" type="text" required maxLength={65} />
-        </div>
-
-        <div>
-          <label htmlFor="description">Description</label>
-          <textarea id="description" name="description" maxLength={500} />
-        </div>
-
-        <button type="submit">Create Task</button>
-      </form>
+      <Link href={`/dashboard/projects/${projectId}/tasks/new`}>
+        Create Task
+      </Link>
 
       <hr />
 
