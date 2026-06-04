@@ -1,6 +1,7 @@
 import { TaskPriority, TaskStatus } from "@/app/generated/prisma/client";
 import { TaskStatusSelect } from "./task-status-select";
 import { TaskPrioritySelect } from "./task-priority-select";
+import { DeleteTaskButton } from "./delete-task-button";
 
 interface TaskCardProps {
   taskId: string;
@@ -35,6 +36,7 @@ export function TaskCard({
         currentPriority={priority}
       />
       {dueDate && <p>Due: {dueDate.toLocaleString()}</p>}
+      <DeleteTaskButton taskId={taskId} projectId={projectId} />
     </div>
   );
 }

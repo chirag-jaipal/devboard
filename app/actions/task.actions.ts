@@ -2,6 +2,7 @@
 
 import {
   createTask,
+  deleteTask,
   updateTaskPriority,
   updateTaskStatus,
 } from "@/lib/services/task.service";
@@ -85,6 +86,15 @@ export async function updateTaskPriorityAction(
   if (!user) return;
 
   await updateTaskPriority(taskId, user.id, validated.data.priority);
+
+  redirect(`/dashboard/projects/${projectId}`);
+}
+
+export async function deleteTaskAction(taskId: string, projectId: string) {
+  const user = await getCurrentUser();
+  if (!user) return;
+
+  await deleteTask(taskId, user.id);
 
   redirect(`/dashboard/projects/${projectId}`);
 }

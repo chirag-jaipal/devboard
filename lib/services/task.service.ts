@@ -92,3 +92,25 @@ export async function updateTaskPriority(
     },
   });
 }
+
+export async function deleteTask(taskId: string, userId: string) {
+  const task = await prisma.task.findFirst({
+    where: {
+      id: taskId,
+
+      project: {
+        userId,
+      },
+    },
+  });
+
+  if (!task) {
+    throw new Error("Task not found");
+  }
+
+  await prisma.task.delete({
+    where: {
+      id: taskId,
+    },
+  });
+}
