@@ -2,22 +2,83 @@ import { createProjectAction } from "@/app/actions/project.actions";
 
 export default function NewProjectPage() {
   return (
-    <div>
-      <h1>Create Project</h1>
+    <div className="max-w-2xl space-y-6">
+      {/* Header */}
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-1">
+          Workspace
+        </p>
+        <h1 className="text-2xl font-semibold tracking-tight text-neutral-900">
+          Create Project
+        </h1>
+        <p className="text-sm text-neutral-400 mt-1">
+          Start a new project and organize your work.
+        </p>
+      </div>
 
-      <form action={createProjectAction}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input id="title" name="title" type="text" required maxLength={65} />
-        </div>
+      {/* Form Card */}
+      <div className="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden">
+        <form
+          action={createProjectAction}
+          className="divide-y divide-neutral-100"
+        >
+          {/* Title */}
+          <div className="px-6 py-5">
+            <label
+              htmlFor="title"
+              className="block text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-3"
+            >
+              Title
+            </label>
+            <input
+              id="title"
+              name="title"
+              type="text"
+              required
+              maxLength={65}
+              placeholder="e.g. Portfolio Website"
+              className="w-full text-base text-neutral-900 placeholder:text-neutral-300 bg-neutral-50 border border-neutral-200 rounded-lg px-3.5 py-2.5 outline-none focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="description">Description</label>
-          <textarea id="description" name="description" maxLength={500} />
-        </div>
+          {/* Description */}
+          <div className="px-6 py-5">
+            <label
+              htmlFor="description"
+              className="block text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-3"
+            >
+              Description
+              <span className="ml-1.5 normal-case tracking-normal font-normal text-neutral-300">
+                — optional
+              </span>
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              rows={3}
+              maxLength={500}
+              placeholder="What is this project about…"
+              className="w-full text-sm text-neutral-900 placeholder:text-neutral-300 bg-neutral-50 border border-neutral-200 rounded-lg px-3.5 py-2.5 outline-none focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all resize-none"
+            />
+          </div>
 
-        <button type="submit">Create Project</button>
-      </form>
+          {/* Footer */}
+          <div className="px-6 py-4 bg-neutral-50 border-t border-neutral-200 flex items-center justify-end gap-3">
+            <a
+              href="/dashboard/projects"
+              className="text-sm text-neutral-500 hover:text-neutral-800 transition-colors"
+            >
+              Cancel
+            </a>
+            <button
+              type="submit"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-neutral-900 text-white text-sm font-medium hover:bg-neutral-700 active:scale-[0.98] transition-all"
+            >
+              Create Project
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

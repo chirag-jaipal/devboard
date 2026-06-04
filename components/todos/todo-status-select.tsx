@@ -8,6 +8,12 @@ interface TodoStatusSelectProps {
   currentStatus: TaskStatus;
 }
 
+const statusStyles: Record<TaskStatus, string> = {
+  TODO: "bg-neutral-100 text-neutral-600",
+  IN_PROGRESS: "bg-blue-50 text-blue-600",
+  DONE: "bg-emerald-50 text-emerald-600",
+};
+
 export function TodoStatusSelect({
   todoId,
   currentStatus,
@@ -16,11 +22,16 @@ export function TodoStatusSelect({
 
   return (
     <form action={updateStatus}>
-      <span>Select:</span>
       <select
         name="status"
-        value={currentStatus}
+        defaultValue={currentStatus}
         onChange={(e) => e.currentTarget.form?.requestSubmit()}
+        className={`
+          w-full text-xs font-medium px-2.5 py-1.5 rounded-md border-0
+          appearance-none cursor-pointer outline-none
+          focus:ring-2 focus:ring-neutral-200 transition-colors
+          ${statusStyles[currentStatus]}
+        `}
       >
         <option value="TODO">Todo</option>
         <option value="IN_PROGRESS">In Progress</option>
