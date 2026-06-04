@@ -1,9 +1,16 @@
 "use server";
 
 import { getCurrentUser } from "@/lib/auth";
-import { createProject } from "@/lib/services/project.service";
-import { CreateProjectSchema } from "@/schemas/project.schema";
-import { redirect } from "next/navigation";
+import {
+  createProject,
+  updateProjectStatus,
+} from "@/lib/services/project.service";
+import {
+  CreateProjectSchema,
+  UpdateProjectStatusSchema,
+} from "@/schemas/project.schema";
+
+import { revalidatePath } from "next/cache";
 
 export async function createProjectAction(formData: FormData) {
   const rawData = {
@@ -34,5 +41,31 @@ export async function createProjectAction(formData: FormData) {
 
   await createProject(projectData);
 
-  redirect("/dashboard/projects");
+  revalidatePath("/dashboard/projects");
+}
+
+export async function updateProjectStatusAction(
+  projectId: string,
+  formData: FormData,
+) {
+  const rawData = {
+    status: formData.get("status"),
+  };
+
+  const validated = UpdateProjectStatusSchema.safeParse(rawData);
+
+  if (!validated.success) {
+    return;
+  }
+
+  const user = await getCurrentUser();
+
+  if (!user) {
+    return;
+  }
+
+  await updateProjectStatus(projectId, user.id, validated.data.status);
+
+  console.log("revalidating...");
+  revalidatePath(`/dashboard/projects/${projectId}`);
 }

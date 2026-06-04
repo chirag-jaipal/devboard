@@ -1,3 +1,4 @@
+import { TaskStatus } from "@/app/generated/prisma/client";
 import { z } from "zod";
 
 export const createTaskSchema = z.object({
@@ -16,3 +17,9 @@ export const createTaskSchema = z.object({
 });
 
 export type createTaskSchemaType = z.infer<typeof createTaskSchema>;
+
+export const UpdateTaskStatusSchema = z.object({
+  status: z.nativeEnum(TaskStatus),
+});
+
+export type UpdateTaskStatusSchemaType = z.infer<typeof UpdateTaskStatusSchema>;

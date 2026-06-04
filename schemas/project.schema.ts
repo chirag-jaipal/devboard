@@ -1,3 +1,4 @@
+import { ProjectStatus } from "@/app/generated/prisma/client";
 import { z } from "zod";
 
 export const CreateProjectSchema = z.object({
@@ -16,3 +17,11 @@ export const CreateProjectSchema = z.object({
 });
 
 export type CreateProjectSchemaType = z.infer<typeof CreateProjectSchema>;
+
+export const UpdateProjectStatusSchema = z.object({
+  status: z.nativeEnum(ProjectStatus),
+});
+
+export type UpdateProjectStatusSchemaType = z.infer<
+  typeof UpdateProjectStatusSchema
+>;

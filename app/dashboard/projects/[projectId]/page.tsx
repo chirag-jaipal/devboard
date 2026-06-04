@@ -1,6 +1,8 @@
+import { ProjectDetails } from "@/components/projects/project-details";
 import { getProjectById } from "@/lib/services/project.service";
 import { createTaskAction } from "@/app/actions/task.actions";
 import { getTasksByProjectId } from "@/lib/services/task.service";
+import { TaskCard } from "@/components/tasks/task-card";
 import { getCurrentUser } from "@/lib/auth";
 
 import { notFound } from "next/navigation";
@@ -26,15 +28,14 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
 
   return (
     <div>
-      <h1>{project.title}</h1>
-
-      <p>{project.description}</p>
-
-      <p>Status: {project.status}</p>
-
-      <p>Created At: {project.createdAt.toLocaleDateString()}</p>
-
-      <p>Total Tasks: {project.taskCount}</p>
+      <ProjectDetails
+        projectId={projectId}
+        title={project.title}
+        description={project.description}
+        status={project.status}
+        createdAt={project.createdAt}
+        taskCount={project.taskCount}
+      />
 
       <hr />
 
@@ -43,13 +44,11 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
       <form action={createTaskForProject}>
         <div>
           <label htmlFor="title">Title</label>
-
           <input id="title" name="title" type="text" required maxLength={65} />
         </div>
 
         <div>
           <label htmlFor="description">Description</label>
-
           <textarea id="description" name="description" maxLength={500} />
         </div>
 
@@ -64,15 +63,15 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
         <p>No tasks found.</p>
       ) : (
         tasks.map((task) => (
-          <div key={task.id}>
-            <h3>{task.title}</h3>
-
-            <p>Status: {task.status}</p>
-
-            <p>Priority: {task.priority}</p>
-
-            {task.dueDate && <p>Due: {task.dueDate.toLocaleDateString()}</p>}
-          </div>
+          <TaskCard
+            key={task.id}
+            taskId={task.id}
+            projectId={projectId}
+            title={task.title}
+            status={task.status}
+            priority={task.priority}
+            dueDate={task.dueDate}
+          />
         ))
       )}
     </div>

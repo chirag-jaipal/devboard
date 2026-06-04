@@ -1,8 +1,12 @@
 "use server";
 
-import { createTask } from "@/lib/services/task.service";
-import { createTaskSchema } from "@/schemas/task.schema";
-import { redirect } from "next/navigation";
+import { createTask, updateTaskStatus } from "@/lib/services/task.service";
+import { revalidatePath } from "next/cache";
+import { getCurrentUser } from "@/lib/auth";
+import {
+  createTaskSchema,
+  UpdateTaskStatusSchema,
+} from "@/schemas/task.schema";
 
 export async function createTaskAction(projectId: string, formData: FormData) {
   const rawData = {
@@ -27,5 +31,35 @@ export async function createTaskAction(projectId: string, formData: FormData) {
 
   await createTask(taskData);
 
-  redirect(`/dashboard/projects/${projectId}`);
+  revalidatePath(`/dashboard/projects/${projectId}`);
+}
+
+export async function updateTaskStatusAction(
+  taskId: string,
+  projectId: string,
+  formData: FormData,
+) {
+  const rawData = {
+    status: formData.get("status"),
+  };
+
+  const validated = UpdateTaskStatusSchema.safeParse(rawData);
+  if (!validated.success) {
+    return;
+    // return {
+    //   success: false,
+    //   errors: validated.error.flatten().fieldErrors,
+    // };
+  }
+
+  const user = await getCurrentUser();
+  if (!user) {
+    // TODO
+    return;
+  }
+
+  await updateTaskStatus(taskId, user.id, validated.data.status);
+
+  console.log("revalidating...");
+  revalidatePath(`/dashboard/projects/${projectId}`);
 }

@@ -1,5 +1,6 @@
 import { CreateTaskInput } from "@/types/task.types";
 import { prisma } from "../db";
+import { TaskStatus } from "@/app/generated/prisma/client";
 
 export async function createTask(data: CreateTaskInput): Promise<void> {
   const { title, description, projectId } = data;
@@ -31,9 +32,33 @@ export async function getTasksByProjectId(projectId: string, userId: string) {
       dueDate: true,
       createdAt: true,
     },
+  });
+}
 
-    orderBy: {
-      createdAt: "desc",
+export async function updateTaskStatus(
+  taskId: string,
+  userId: string,
+  status: TaskStatus,
+) {
+  const task = await prisma.task.findFirst({
+    where: {
+      id: taskId,
+
+      project: {
+        userId,
+      },
+    },
+  });
+
+  if (!task) throw new Error("Task not found");
+
+  await prisma.task.update({
+    where: {
+      id: taskId,
+    },
+
+    data: {
+      status,
     },
   });
 }

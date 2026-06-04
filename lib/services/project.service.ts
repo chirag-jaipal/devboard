@@ -1,3 +1,4 @@
+import { ProjectStatus } from "@/app/generated/prisma/client";
 import { prisma } from "@/lib/db";
 import { CreateProjectInput } from "@/types/project.types";
 
@@ -78,4 +79,30 @@ export async function getProjectById(projectId: string, userId: string) {
     createdAt: existingProject.createdAt,
     taskCount: existingProject._count.tasks,
   };
+}
+
+export async function updateProjectStatus(
+  projectId: string,
+  userId: string,
+  status: ProjectStatus,
+) {
+  const project = await prisma.project.findFirst({
+    where: {
+      id: projectId,
+      userId,
+    },
+  });
+
+  if (!project) {
+    throw new Error("Project not found");
+  }
+
+  await prisma.project.update({
+    where: {
+      id: projectId,
+    },
+    data: {
+      status,
+    },
+  });
 }
