@@ -1,4 +1,4 @@
-import { TaskStatus } from "@/app/generated/prisma/client";
+import { TaskPriority, TaskStatus } from "@/app/generated/prisma/client";
 import { z } from "zod";
 
 export const createTaskSchema = z.object({
@@ -23,3 +23,11 @@ export const UpdateTaskStatusSchema = z.object({
 });
 
 export type UpdateTaskStatusSchemaType = z.infer<typeof UpdateTaskStatusSchema>;
+
+export const UpdateTaskPrioritySchema = z.object({
+  priority: z.nativeEnum(TaskPriority),
+});
+
+export type UpdateTaskPrioritySchemaType = z.infer<
+  typeof UpdateTaskPrioritySchema
+>;

@@ -1,5 +1,6 @@
 import { TaskPriority, TaskStatus } from "@/app/generated/prisma/client";
 import { TaskStatusSelect } from "./task-status-select";
+import { TaskPrioritySelect } from "./task-priority-select";
 
 interface TaskCardProps {
   taskId: string;
@@ -22,11 +23,17 @@ export function TaskCard({
     <div>
       <h3>{title}</h3>
       <TaskStatusSelect
+        key={projectId}
         taskId={taskId}
         projectId={projectId}
         currentStatus={status}
       />
-      <p>Priority: {priority}</p>
+      <TaskPrioritySelect
+        key={taskId}
+        taskId={taskId}
+        projectId={projectId}
+        currentPriority={priority}
+      />
       {dueDate && <p>Due: {dueDate.toLocaleString()}</p>}
     </div>
   );

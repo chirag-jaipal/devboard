@@ -1,12 +1,18 @@
 "use server";
 
-import { createTask, updateTaskStatus } from "@/lib/services/task.service";
-import { revalidatePath } from "next/cache";
+import {
+  createTask,
+  updateTaskPriority,
+  updateTaskStatus,
+} from "@/lib/services/task.service";
 import { getCurrentUser } from "@/lib/auth";
 import {
   createTaskSchema,
+  UpdateTaskPrioritySchema,
   UpdateTaskStatusSchema,
 } from "@/schemas/task.schema";
+
+import { redirect } from "next/navigation";
 
 export async function createTaskAction(projectId: string, formData: FormData) {
   const rawData = {
@@ -31,7 +37,7 @@ export async function createTaskAction(projectId: string, formData: FormData) {
 
   await createTask(taskData);
 
-  revalidatePath(`/dashboard/projects/${projectId}`);
+  redirect(`/dashboard/projects/${projectId}`);
 }
 
 export async function updateTaskStatusAction(
@@ -60,6 +66,25 @@ export async function updateTaskStatusAction(
 
   await updateTaskStatus(taskId, user.id, validated.data.status);
 
-  console.log("revalidating...");
-  revalidatePath(`/dashboard/projects/${projectId}`);
+  redirect(`/dashboard/projects/${projectId}`);
+}
+
+export async function updateTaskPriorityAction(
+  taskId: string,
+  projectId: string,
+  formData: FormData,
+) {
+  const rawData = {
+    priority: formData.get("priority"),
+  };
+
+  const validated = UpdateTaskPrioritySchema.safeParse(rawData);
+  if (!validated.success) return;
+
+  const user = await getCurrentUser();
+  if (!user) return;
+
+  await updateTaskPriority(taskId, user.id, validated.data.priority);
+
+  redirect(`/dashboard/projects/${projectId}`);
 }

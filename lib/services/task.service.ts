@@ -1,6 +1,6 @@
 import { CreateTaskInput } from "@/types/task.types";
 import { prisma } from "../db";
-import { TaskStatus } from "@/app/generated/prisma/client";
+import { TaskPriority, TaskStatus } from "@/app/generated/prisma/client";
 
 export async function createTask(data: CreateTaskInput): Promise<void> {
   const { title, description, projectId } = data;
@@ -59,6 +59,36 @@ export async function updateTaskStatus(
 
     data: {
       status,
+    },
+  });
+}
+
+export async function updateTaskPriority(
+  taskId: string,
+  userId: string,
+  priority: TaskPriority,
+) {
+  const task = await prisma.task.findFirst({
+    where: {
+      id: taskId,
+
+      project: {
+        userId,
+      },
+    },
+  });
+
+  if (!task) {
+    throw new Error("Task not found");
+  }
+
+  await prisma.task.update({
+    where: {
+      id: taskId,
+    },
+
+    data: {
+      priority,
     },
   });
 }

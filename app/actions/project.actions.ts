@@ -10,7 +10,7 @@ import {
   UpdateProjectStatusSchema,
 } from "@/schemas/project.schema";
 
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createProjectAction(formData: FormData) {
   const rawData = {
@@ -41,7 +41,7 @@ export async function createProjectAction(formData: FormData) {
 
   await createProject(projectData);
 
-  revalidatePath("/dashboard/projects");
+  redirect("/dashboard/projects");
 }
 
 export async function updateProjectStatusAction(
@@ -66,6 +66,5 @@ export async function updateProjectStatusAction(
 
   await updateProjectStatus(projectId, user.id, validated.data.status);
 
-  console.log("revalidating...");
-  revalidatePath(`/dashboard/projects/${projectId}`);
+  redirect(`/dashboard/projects/${projectId}`);
 }

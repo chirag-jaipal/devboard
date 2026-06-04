@@ -22,6 +22,8 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
   const project = await getProjectById(projectId, user.id);
   if (!project) notFound();
 
+  console.log(project.status);
+
   const tasks = await getTasksByProjectId(projectId, user.id);
 
   const createTaskForProject = createTaskAction.bind(null, projectId);
@@ -29,6 +31,7 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
   return (
     <div>
       <ProjectDetails
+        key={projectId}
         projectId={projectId}
         title={project.title}
         description={project.description}
