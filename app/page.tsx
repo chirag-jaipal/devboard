@@ -378,9 +378,6 @@ export default function LandingPage() {
                 View Dashboard
               </Link>
             </div>
-            <p className="text-xs text-neutral-400 mt-4">
-              Free to use · No account required to explore
-            </p>
           </div>
 
           {/* Right — dashboard preview */}
