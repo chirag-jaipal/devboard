@@ -634,14 +634,6 @@ export default function LandingPage() {
             >
               Todos
             </a>
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-neutral-700 transition-colors flex items-center gap-1.5"
-            >
-              GitHub
-            </a>
           </div>
           <p className="text-xs text-neutral-400">
             © {new Date().getFullYear()} DevBoard. All rights reserved.
