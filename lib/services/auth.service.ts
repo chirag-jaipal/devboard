@@ -1,8 +1,6 @@
-import {
-  registerUserSchema,
-  registerUserSchemaType,
-} from "@/schemas/register.schema";
+import { registerUserSchemaType } from "@/schemas/auth.schema";
 import { prisma } from "../db";
+
 import bcrypt from "bcryptjs";
 
 export async function registerUser({

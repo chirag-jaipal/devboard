@@ -1,12 +1,12 @@
-import { SignupForm } from "@/components/auth/signup-form";
-import { registerUserAction } from "@/app/actions/auth.actions";
+import { LoginForm } from "@/components/auth/login-form";
+import { loginUserAction } from "@/app/actions/auth.actions";
 
-export default function SignupPage() {
+export default function LoginPage() {
   return (
     <div className="h-screen overflow-hidden bg-neutral-50 flex items-center justify-center px-4">
       <div className="w-full max-w-[460px] space-y-4">
         {/* Logo */}
-        <div className="flex items-center justify-center gap-2 mb-2">
+        <div className="flex items-center justify-center gap-2">
           <div className="w-7 h-7 rounded-lg bg-neutral-900 flex items-center justify-center">
             <svg
               width="14"
@@ -31,30 +31,30 @@ export default function SignupPage() {
           {/* Card header */}
           <div className="px-7 pt-5 pb-4 border-b border-neutral-100">
             <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 mb-1">
-              Get Started
+              Welcome Back
             </p>
             <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 mb-1">
-              Create your account
+              Sign in to your account
             </h1>
             <p className="text-sm text-neutral-400 leading-relaxed">
-              Start managing projects, tasks, and personal todos in one place.
+              Continue managing your projects, tasks, and todos.
             </p>
           </div>
 
           {/* Form */}
           <div className="px-7 py-4">
-            <SignupForm action={registerUserAction} />
+            <LoginForm action={loginUserAction} />
           </div>
 
           {/* Footer */}
           <div className="px-7 py-4 bg-neutral-50 border-t border-neutral-100 text-center">
             <p className="text-xs text-neutral-500">
-              Already have an account?{" "}
+              Don't have an account?{" "}
               <a
-                href="/signin"
+                href="/signup"
                 className="text-neutral-900 font-semibold hover:underline underline-offset-2"
               >
-                Sign In
+                Create Account
               </a>
             </p>
           </div>
