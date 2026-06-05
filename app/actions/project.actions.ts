@@ -20,19 +20,11 @@ export async function createProjectAction(formData: FormData) {
   };
 
   const validated = CreateProjectSchema.safeParse(rawData);
-  if (!validated.success) {
-    return;
-    // return {
-    //   success: false,
-    //   errors: validated.error.flatten().fieldErrors,
-    // };
-  }
+  if (!validated.success)
+    throw new Error("Please enter a valid project title.");
 
   const user = await getCurrentUser();
-  if (!user) {
-    // TODO
-    return;
-  }
+  if (!user) throw new Error("Unauthorized");
 
   const projectData = {
     title: validated.data.title,
@@ -41,7 +33,6 @@ export async function createProjectAction(formData: FormData) {
   };
 
   await createProject(projectData);
-
   redirect("/dashboard/projects");
 }
 
@@ -54,27 +45,19 @@ export async function updateProjectStatusAction(
   };
 
   const validated = UpdateProjectStatusSchema.safeParse(rawData);
-
-  if (!validated.success) {
-    return;
-  }
+  if (!validated.success) throw new Error("Invalid project status.");
 
   const user = await getCurrentUser();
-
-  if (!user) {
-    return;
-  }
+  if (!user) throw new Error("Unauthorized");
 
   await updateProjectStatus(projectId, user.id, validated.data.status);
-
   redirect(`/dashboard/projects/${projectId}`);
 }
 
 export async function deleteProjectAction(projectId: string) {
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) throw new Error("Unauthorized");
 
   await deleteProject(projectId, user.id);
-
   redirect("/dashboard/projects");
 }

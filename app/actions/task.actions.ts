@@ -22,13 +22,7 @@ export async function createTaskAction(projectId: string, formData: FormData) {
   };
 
   const validated = createTaskSchema.safeParse(rawData);
-  if (!validated.success) {
-    return;
-    // return {
-    //   success: false,
-    //   errors: validated.error.flatten().fieldErrors,
-    // };
-  }
+  if (!validated.success) throw new Error("Please enter a valid task title.");
 
   const taskData = {
     title: validated.data.title,
@@ -37,7 +31,6 @@ export async function createTaskAction(projectId: string, formData: FormData) {
   };
 
   await createTask(taskData);
-
   redirect(`/dashboard/projects/${projectId}`);
 }
 
@@ -51,22 +44,12 @@ export async function updateTaskStatusAction(
   };
 
   const validated = UpdateTaskStatusSchema.safeParse(rawData);
-  if (!validated.success) {
-    return;
-    // return {
-    //   success: false,
-    //   errors: validated.error.flatten().fieldErrors,
-    // };
-  }
+  if (!validated.success) throw new Error("Invalid task status.");
 
   const user = await getCurrentUser();
-  if (!user) {
-    // TODO
-    return;
-  }
+  if (!user) throw new Error("Unauthorized");
 
   await updateTaskStatus(taskId, user.id, validated.data.status);
-
   redirect(`/dashboard/projects/${projectId}`);
 }
 
@@ -80,21 +63,19 @@ export async function updateTaskPriorityAction(
   };
 
   const validated = UpdateTaskPrioritySchema.safeParse(rawData);
-  if (!validated.success) return;
+  if (!validated.success) throw new Error("Invalid task priority.");
 
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) throw new Error("Unauthorized");
 
   await updateTaskPriority(taskId, user.id, validated.data.priority);
-
   redirect(`/dashboard/projects/${projectId}`);
 }
 
 export async function deleteTaskAction(taskId: string, projectId: string) {
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) throw new Error("Unauthorized");
 
   await deleteTask(taskId, user.id);
-
   redirect(`/dashboard/projects/${projectId}`);
 }

@@ -1,13 +1,6 @@
-export type CurrentUser = {
-  id: string;
-  email: string;
-  name: string | null;
-};
+import { auth } from "../auth";
 
-export async function getCurrentUser(): Promise<CurrentUser | null> {
-  return {
-    id: "chfrewsd123m",
-    name: "Chirag",
-    email: "chirag@example.com",
-  };
+export async function getCurrentUser() {
+  const session = await auth();
+  return session?.user ?? null;
 }

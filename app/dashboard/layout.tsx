@@ -100,15 +100,14 @@ function Sidebar({
     >
       {/* Logo / App Name */}
       <div className="flex items-center justify-between px-4 h-14 border-b border-neutral-100 shrink-0">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-6 h-6 rounded-md bg-neutral-900 flex items-center justify-center group-hover:scale-105 transition-transform">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-md bg-neutral-900 flex items-center justify-center">
             <Zap size={13} className="text-white" strokeWidth={2.5} />
           </div>
-
           <span className="text-sm font-semibold tracking-tight text-neutral-900">
             DevBoard
           </span>
-        </Link>
+        </div>
         {mobile && onClose && (
           <button
             onClick={onClose}
@@ -138,24 +137,19 @@ function Sidebar({
 
       {/* Bottom user block */}
       <div className="px-3 py-4 border-t border-neutral-100 shrink-0">
-        <Link
-          href="/dashboard/profile"
-          className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-neutral-50 transition-colors"
-        >
+        <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-neutral-50 transition-colors cursor-pointer">
           <div className="w-7 h-7 rounded-full bg-gradient-to-br from-neutral-300 to-neutral-400 flex items-center justify-center shrink-0">
             <span className="text-[11px] font-semibold text-white">C</span>
           </div>
-
           <div className="min-w-0">
             <p className="text-xs font-semibold text-neutral-800 truncate">
               Chirag
             </p>
-
             <p className="text-[10px] text-neutral-400 truncate">
               chirag@devboard.io
             </p>
           </div>
-        </Link>
+        </div>
       </div>
     </aside>
   );
@@ -186,23 +180,10 @@ export default function DashboardLayout({
     };
   }, [mobileOpen]);
 
-  const getCurrentPage = () => {
-    if (pathname === "/dashboard/profile") {
-      return "Profile";
-    }
-
-    if (pathname.startsWith("/dashboard/projects")) {
-      return "Projects";
-    }
-
-    if (pathname.startsWith("/dashboard/todos")) {
-      return "Todos";
-    }
-
-    return "Dashboard";
-  };
-
-  const currentPage = getCurrentPage();
+  const currentPage =
+    NAV_LINKS.find((l) => l.href === pathname)?.label ??
+    NAV_LINKS.find((l) => pathname.startsWith(l.href))?.label ??
+    "Dashboard";
 
   return (
     <div className="flex h-screen bg-neutral-50 overflow-hidden">
@@ -268,13 +249,11 @@ export default function DashboardLayout({
             <span className="text-sm font-medium text-neutral-600 hidden sm:block">
               Chirag
             </span>
-            <Link href="/dashboard/profile">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neutral-300 to-neutral-400 flex items-center justify-center ring-2 ring-white cursor-pointer hover:ring-neutral-200 transition-all">
-                <span className="text-xs font-semibold text-white select-none">
-                  C
-                </span>
-              </div>
-            </Link>
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-neutral-300 to-neutral-400 flex items-center justify-center ring-2 ring-white cursor-pointer hover:ring-neutral-200 transition-all">
+              <span className="text-xs font-semibold text-white select-none">
+                C
+              </span>
+            </div>
           </div>
         </header>
 

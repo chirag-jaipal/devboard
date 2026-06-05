@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 interface SignupFormProps {
-  action: (formData: FormData) => Promise<void>;
+  action: (formData: FormData) => Promise<{ error?: string } | undefined>;
 }
 
 export function SignupForm({ action }: SignupFormProps) {
@@ -48,13 +48,10 @@ export function SignupForm({ action }: SignupFormProps) {
     setPending(true);
 
     try {
-      await action(data);
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. Please try again.";
-      setServerError(message);
+      const result = await action(data);
+      if (result?.error) {
+        setServerError(result.error);
+      }
     } finally {
       setPending(false);
     }

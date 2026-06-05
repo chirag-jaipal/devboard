@@ -20,10 +20,10 @@ export async function createTodoAction(formData: FormData) {
   };
 
   const validated = createTodoSchema.safeParse(rawData);
-  if (!validated.success) return;
+  if (!validated.success) throw new Error("Please enter a valid todo title.");
 
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) throw new Error("Unauthorized");
 
   const todoData = {
     title: validated.data.title,
@@ -32,7 +32,6 @@ export async function createTodoAction(formData: FormData) {
   };
 
   await createTodo(todoData);
-
   redirect(`/dashboard/todos`);
 }
 
@@ -45,21 +44,19 @@ export async function updateTodoStatusAction(
   };
 
   const validated = updateTodoStatusSchema.safeParse(rawData);
-  if (!validated.success) return;
+  if (!validated.success) throw new Error("Invalid todo status.");
 
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) throw new Error("Unauthorized");
 
   await updateTodoStatus(todoId, user.id, validated.data.status);
-
   redirect("/dashboard/todos");
 }
 
 export async function deleteTodoAction(todoId: string) {
   const user = await getCurrentUser();
-  if (!user) return;
+  if (!user) throw new Error("Unauthorized");
 
   await deleteTodo(todoId, user.id);
-
   redirect("/dashboard/todos");
 }

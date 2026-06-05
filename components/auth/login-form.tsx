@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
 interface LoginFormProps {
-  action: (formData: FormData) => Promise<void>;
+  action: (formData: FormData) => Promise<{ error?: string } | undefined>;
 }
 
 export function LoginForm({ action }: LoginFormProps) {
@@ -41,13 +41,10 @@ export function LoginForm({ action }: LoginFormProps) {
     setPending(true);
 
     try {
-      await action(data);
-    } catch (err: unknown) {
-      setServerError(
-        err instanceof Error
-          ? err.message
-          : "Invalid email or password. Please try again.",
-      );
+      const result = await action(data);
+      if (result?.error) {
+        setServerError(result.error);
+      }
     } finally {
       setPending(false);
     }
@@ -131,13 +128,13 @@ export function LoginForm({ action }: LoginFormProps) {
           >
             Password
           </label>
-          <a
+          {/* <a
             href="#"
             tabIndex={0}
             className="text-[11px] text-neutral-400 hover:text-neutral-700 transition-colors underline-offset-2 hover:underline"
           >
             Forgot password?
-          </a>
+          </a> */}
         </div>
         <div className="relative">
           <input

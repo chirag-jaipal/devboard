@@ -350,7 +350,7 @@ export default function LandingPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-xs font-medium text-neutral-600 mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Now in public beta
+              Now in beta
             </div>
             <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-neutral-900 leading-[1.1] mb-5">
               Manage Projects,

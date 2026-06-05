@@ -12,7 +12,6 @@ import { RecentTodos } from "@/components/dashboard/recent-todos";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
-
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -20,14 +19,12 @@ export default async function DashboardPage() {
       </div>
     );
   }
-
   const [stats, recentProjects, recentTasks, recentTodos] = await Promise.all([
     getDashboardStats(user.id),
     getRecentProjects(user.id),
     getRecentTasks(user.id),
     getRecentTodos(user.id),
   ]);
-
   return (
     <div className="space-y-8">
       {/* Page Header */}
@@ -42,7 +39,6 @@ export default async function DashboardPage() {
           Here&apos;s what&apos;s happening across your workspace.
         </p>
       </div>
-
       {/* Stats */}
       <StatsGrid
         totalProjects={stats.totalProjects}
@@ -51,13 +47,11 @@ export default async function DashboardPage() {
         completedTasks={stats.completedTasks}
         totalTodos={stats.totalTodos}
       />
-
       {/* Bottom Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <RecentProjects projects={recentProjects} />
         <RecentTodos todos={recentTodos} />
       </div>
-
       {/* Tasks — full width */}
       <RecentTasks tasks={recentTasks} />
     </div>

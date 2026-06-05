@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { registerUser } from "@/lib/services/auth.service";
 import { loginUserSchema, registerUserSchema } from "@/schemas/auth.schema";
 import { AuthError } from "next-auth";
@@ -16,10 +16,18 @@ export async function registerUserAction(formData: FormData) {
   const validated = registerUserSchema.safeParse(rawData);
 
   if (!validated.success) {
-    return;
+    return {
+      error: "Please provide valid registration details.",
+    };
   }
 
-  await registerUser(validated.data);
+  try {
+    await registerUser(validated.data);
+  } catch {
+    return {
+      error: "An account with this email already exists.",
+    };
+  }
 
   redirect("/login");
 }
@@ -33,31 +41,38 @@ export async function loginUserAction(formData: FormData) {
   const validated = loginUserSchema.safeParse(rawData);
 
   if (!validated.success) {
-    return;
+    return {
+      error: "Please enter valid credentials.",
+    };
   }
 
   try {
     await signIn("credentials", {
-      email: formData.get("email"),
-      password: formData.get("password"),
+      email: validated.data.email,
+      password: validated.data.password,
       redirectTo: "/dashboard",
     });
   } catch (error) {
     if (error instanceof AuthError) {
-      // switch (error.type) {
-      //   case "CredentialsSignin":
-      //     return {
-      //       error: "Invalid email or password.",
-      //     };
+      switch (error.type) {
+        case "CredentialsSignin":
+          return {
+            error: "Invalid email or password.",
+          };
 
-      //   default:
-      //     return {
-      //       error: "Something went wrong. Please try again.",
-      //     };
-      // }
-      return;
+        default:
+          return {
+            error: "Something went wrong. Please try again.",
+          };
+      }
     }
 
     throw error;
   }
+}
+
+export async function logoutUserAction() {
+  await signOut({
+    redirectTo: "/",
+  });
 }

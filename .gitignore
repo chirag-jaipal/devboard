@@ -38,6 +38,7 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+/types/auth.d.ts
 next-env.d.ts
 
 /app/generated/prisma

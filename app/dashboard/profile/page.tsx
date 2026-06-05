@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/lib/auth";
 import { getUserStats } from "@/lib/services/user.service";
+import { logoutUserAction } from "@/app/actions/auth.actions"; // adjust import to your path
 import {
   FolderKanban,
   CheckSquare,
@@ -7,8 +8,8 @@ import {
   User,
   Mail,
   ShieldCheck,
-  Calendar,
   Zap,
+  LogOut,
 } from "lucide-react";
 
 export default async function ProfilePage() {
@@ -79,15 +80,43 @@ export default async function ProfilePage() {
             <p className="text-sm text-neutral-500">{user.email}</p>
           </div>
 
-          {/* Badges */}
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-neutral-100 text-neutral-600 border border-neutral-200">
-              Demo User
-            </span>
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Active
-            </span>
+          {/* Badges + Sign Out */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            {/* Left: status badges */}
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-neutral-100 text-neutral-600 border border-neutral-200">
+                Member
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                Active
+              </span>
+            </div>
+
+            {/* Right: Sign Out */}
+            <form action={logoutUserAction}>
+              <button
+                type="submit"
+                className="
+                  inline-flex items-center gap-1.5
+                  px-2.5 py-1 rounded-full
+                  border border-neutral-200
+                  bg-white
+                  text-[10px] font-semibold uppercase tracking-wider
+                  text-neutral-500
+                  transition-all duration-150
+                  hover:border-red-200 hover:bg-red-50 hover:text-red-600
+                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-200 focus-visible:ring-offset-1
+                  active:scale-95
+                  cursor-pointer
+                  select-none
+                "
+                aria-label="Sign out of your account"
+              >
+                <LogOut size={9} strokeWidth={2.5} />
+                Sign Out
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -148,8 +177,7 @@ export default async function ProfilePage() {
             {[
               { icon: User, label: "Name", value: user.name },
               { icon: Mail, label: "Email", value: user.email },
-              { icon: ShieldCheck, label: "Account Type", value: "Demo User" },
-              { icon: Calendar, label: "Member Since", value: "June 2026" },
+              { icon: ShieldCheck, label: "Account Type", value: "Member" },
             ].map(({ icon: Icon, label, value }) => (
               <div
                 key={label}
@@ -229,7 +257,7 @@ export default async function ProfilePage() {
               </p>
             </div>
 
-            {/* Progress bar — tasks completion visual */}
+            {/* Progress bar */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
