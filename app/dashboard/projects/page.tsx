@@ -70,6 +70,7 @@ export default async function Page() {
               className="group block"
             >
               <ProjectCard
+                projectId={project.id}
                 title={project.title}
                 status={project.status}
                 createdAt={project.createdAt}

@@ -106,3 +106,22 @@ export async function updateProjectStatus(
     },
   });
 }
+
+export async function deleteProject(projectId: string, userId: string) {
+  const project = await prisma.project.findFirst({
+    where: {
+      id: projectId,
+      userId,
+    },
+  });
+
+  if (!project) {
+    throw new Error("Project not found");
+  }
+
+  await prisma.project.delete({
+    where: {
+      id: projectId,
+    },
+  });
+}

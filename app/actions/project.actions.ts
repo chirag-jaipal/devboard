@@ -3,6 +3,7 @@
 import { getCurrentUser } from "@/lib/auth";
 import {
   createProject,
+  deleteProject,
   updateProjectStatus,
 } from "@/lib/services/project.service";
 import {
@@ -67,4 +68,13 @@ export async function updateProjectStatusAction(
   await updateProjectStatus(projectId, user.id, validated.data.status);
 
   redirect(`/dashboard/projects/${projectId}`);
+}
+
+export async function deleteProjectAction(projectId: string) {
+  const user = await getCurrentUser();
+  if (!user) return;
+
+  await deleteProject(projectId, user.id);
+
+  redirect("/dashboard/projects");
 }

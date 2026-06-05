@@ -1,6 +1,8 @@
 import { CheckSquare, Calendar, ArrowUpRight } from "lucide-react";
+import { DeleteProjectButton } from "./delete-project-button";
 
 interface ProjectCardProps {
+  projectId: string;
   title: string;
   status: string;
   createdAt: Date | string;
@@ -57,6 +59,7 @@ function formatDate(date: Date | string): string {
 }
 
 export function ProjectCard({
+  projectId,
   title,
   status,
   createdAt,
@@ -74,12 +77,16 @@ export function ProjectCard({
           <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
           {s.label}
         </span>
-        <div className="w-7 h-7 rounded-lg bg-neutral-50 border border-neutral-100 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-          <ArrowUpRight
-            size={13}
-            className="text-neutral-500"
-            strokeWidth={2}
-          />
+        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <DeleteProjectButton projectId={projectId} />
+
+          <div className="w-7 h-7 rounded-lg bg-neutral-50 border border-neutral-100 flex items-center justify-center">
+            <ArrowUpRight
+              size={13}
+              className="text-neutral-500"
+              strokeWidth={2}
+            />
+          </div>
         </div>
       </div>
 
