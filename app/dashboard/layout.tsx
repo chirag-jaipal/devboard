@@ -100,14 +100,15 @@ function Sidebar({
     >
       {/* Logo / App Name */}
       <div className="flex items-center justify-between px-4 h-14 border-b border-neutral-100 shrink-0">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-neutral-900 flex items-center justify-center">
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="w-6 h-6 rounded-md bg-neutral-900 flex items-center justify-center group-hover:scale-105 transition-transform">
             <Zap size={13} className="text-white" strokeWidth={2.5} />
           </div>
+
           <span className="text-sm font-semibold tracking-tight text-neutral-900">
             DevBoard
           </span>
-        </div>
+        </Link>
         {mobile && onClose && (
           <button
             onClick={onClose}
