@@ -12,5 +12,11 @@ export default async function DashboardLayout({
     redirect("/signin");
   }
 
-  return <DashboardShell user={user}>{children}</DashboardShell>;
+  const dashboardUser = {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  };
+
+  return <DashboardShell user={dashboardUser}>{children}</DashboardShell>;
 }
