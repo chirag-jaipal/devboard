@@ -6,6 +6,18 @@ DevBoard combines project tracking, task management, and personal productivity t
 
 ---
 
+## Deployment
+
+The application is deployed on Vercel.
+
+Frontend: Vercel
+Database: Neon PostgreSQL
+Authentication: Auth.js
+
+🔗 [Live Demo](https://devboard-topaz.vercel.app)
+
+---
+
 ## Features
 
 ### Authentication
@@ -65,6 +77,30 @@ DevBoard combines project tracking, task management, and personal productivity t
 
 ---
 
+## Screenshots
+
+### Landing Page
+
+![Landing Page](./public/Landing-Page.png)
+
+### Dashboard
+
+![Dashboard](./public/Dashboard.png)
+
+### Projects
+
+![Projects](./public/Projects.png)
+
+### Todos
+
+![Todos](./public/Todos.png)
+
+### Profile
+
+![Profile](./public/Profile.png)
+
+---
+
 ## Tech Stack
 
 ### Frontend
@@ -101,6 +137,12 @@ DevBoard combines project tracking, task management, and personal productivity t
 ### Package Manager
 
 - Bun
+
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-336791)
+![Auth.js](https://img.shields.io/badge/Auth.js-v5-green)
 
 ---
 
@@ -179,6 +221,16 @@ User
 │ └── Tasks
 └── Todos
 ```
+
+---
+
+## Challenges Faced
+
+- Implementing Auth.js v5 authentication
+- Managing server actions and route protection
+- Configuring Prisma for Vercel deployment
+- Handling strict TypeScript checks in CI/CD
+- Ensuring user-level data isolation
 
 ---
 
@@ -270,30 +322,6 @@ Start production server:
 ```bash
 bun run start
 ```
-
----
-
-## Screenshots
-
-### Landing Page
-
-![Landing Page](./public/Landing-Page.png)
-
-### Dashboard
-
-![Dashboard](./public/Dashboard.png)
-
-### Projects
-
-![Projects](./public/Projects.png)
-
-### Todos
-
-![Todos](./public/Todos.png)
-
-### Profile
-
-![Profile](./public/Profile.png)
 
 ---
 
