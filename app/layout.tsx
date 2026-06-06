@@ -16,6 +16,11 @@ export const metadata = {
   title: "DevBoard",
   description:
     "Manage projects, tasks and personal todos from a single workspace.",
+
+  openGraph: {
+    title: "DevBoard",
+    description: "Manage projects and tasks efficiently",
+  },
 };
 
 export default function RootLayout({
