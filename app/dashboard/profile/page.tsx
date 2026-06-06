@@ -11,19 +11,17 @@ import {
   Zap,
   LogOut,
 } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function ProfilePage() {
   const user = await getCurrentUser();
 
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-sm text-neutral-400">User not found.</p>
-      </div>
-    );
+  if (!user?.id) {
+    redirect("/signin");
   }
 
-  const stats = await getUserStats(user.id);
+  const userId: string = user.id;
+  const stats = await getUserStats(userId);
 
   const initials =
     user.name
