@@ -1,7 +1,7 @@
 "use client";
 
 import { updateTodoStatusAction } from "@/app/actions/todo.actions";
-import { TaskStatus } from "@/app/generated/prisma/client";
+import { TaskStatus } from "@prisma/client";
 
 interface TodoStatusSelectProps {
   todoId: string;

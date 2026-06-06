@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TaskStatus } from "@/app/generated/prisma/client";
+import { TaskStatus } from "@prisma/client";
 
 export const createTodoSchema = z.object({
   title: z

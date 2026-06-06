@@ -1,7 +1,7 @@
 "use client";
 
 import { updateTaskStatusAction } from "@/app/actions/task.actions";
-import { TaskStatus } from "@/app/generated/prisma/client";
+import { TaskStatus } from "@prisma/client";
 
 interface TaskStatusSelectProps {
   taskId: string;

@@ -1,6 +1,6 @@
 import { CreateTaskInput } from "@/types/task.types";
 import { prisma } from "../db";
-import { TaskPriority, TaskStatus } from "@/app/generated/prisma/client";
+import { TaskPriority, TaskStatus } from "@prisma/client";
 
 export async function createTask(data: CreateTaskInput): Promise<void> {
   const { title, description, projectId } = data;

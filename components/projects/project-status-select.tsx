@@ -1,7 +1,7 @@
 "use client";
 
 import { updateProjectStatusAction } from "@/app/actions/project.actions";
-import { ProjectStatus } from "@/app/generated/prisma/client";
+import { ProjectStatus } from "@prisma/client";
 import { ChevronDown } from "lucide-react";
 
 interface ProjectStatusProps {

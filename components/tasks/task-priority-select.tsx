@@ -1,7 +1,7 @@
 "use client";
 
 import { updateTaskPriorityAction } from "@/app/actions/task.actions";
-import { TaskPriority } from "@/app/generated/prisma/client";
+import { TaskPriority } from "@prisma/client";
 
 interface TaskPriorityProps {
   taskId: string;

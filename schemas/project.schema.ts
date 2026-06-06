@@ -1,4 +1,4 @@
-import { ProjectStatus } from "@/app/generated/prisma/client";
+import { ProjectStatus } from "@prisma/client";
 import { z } from "zod";
 
 export const CreateProjectSchema = z.object({

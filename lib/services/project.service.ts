@@ -1,4 +1,4 @@
-import { ProjectStatus } from "@/app/generated/prisma/client";
+import { ProjectStatus } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { CreateProjectInput } from "@/types/project.types";
 

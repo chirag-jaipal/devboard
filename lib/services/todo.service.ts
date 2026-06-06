@@ -1,4 +1,4 @@
-import { TaskStatus } from "@/app/generated/prisma/client";
+import { TaskStatus } from "@prisma/client";
 import { CreateTodoInput } from "@/types/todo.types";
 import { prisma } from "../db";
 

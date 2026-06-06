@@ -1,4 +1,4 @@
-import { TaskPriority, TaskStatus } from "@/app/generated/prisma/client";
+import { TaskPriority, TaskStatus } from "@prisma/client";
 import { TaskStatusSelect } from "./task-status-select";
 import { TaskPrioritySelect } from "./task-priority-select";
 import { DeleteTaskButton } from "./delete-task-button";

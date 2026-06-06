@@ -1,4 +1,4 @@
-import { ProjectStatus } from "@/app/generated/prisma/client";
+import { ProjectStatus } from "@prisma/client";
 import { ProjectStatusSelect } from "./project-status-select";
 import { Calendar, CheckSquare } from "lucide-react";
 
