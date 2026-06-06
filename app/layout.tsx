@@ -12,9 +12,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Devboard",
-  description: "Created for tech lovers.",
+export const metadata = {
+  title: "DevBoard",
+  description:
+    "Manage projects, tasks and personal todos from a single workspace.",
 };
 
 export default function RootLayout({
