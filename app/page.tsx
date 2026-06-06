@@ -301,14 +301,14 @@ export default function LandingPage() {
       {/* ── Navbar ── */}
       <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-neutral-100">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-md bg-neutral-900 flex items-center justify-center">
               <Zap size={13} className="text-white" strokeWidth={2.5} />
             </div>
             <span className="text-sm font-semibold tracking-tight text-neutral-900">
               DevBoard
             </span>
-          </div>
+          </Link>
           <div className="hidden md:flex items-center gap-6 text-sm text-neutral-500">
             <a
               href="#features"

@@ -29,7 +29,7 @@ export async function registerUserAction(formData: FormData) {
     };
   }
 
-  redirect("/login");
+  redirect("/signin");
 }
 
 export async function loginUserAction(formData: FormData) {

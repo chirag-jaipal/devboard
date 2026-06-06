@@ -10,7 +10,9 @@ export default function DashboardError({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error);
+    // console.error(error);
+    console.error("Dashboard error:", error);
+    console.dir(error);
   }, [error]);
 
   return (
