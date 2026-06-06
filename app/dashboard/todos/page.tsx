@@ -4,17 +4,16 @@ import { getTodos } from "@/lib/services/todo.service";
 import { getCurrentUser } from "@/lib/auth";
 import Link from "next/link";
 import { CheckSquare } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function TodosPage() {
   const user = await getCurrentUser();
-  if (!user)
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-sm text-neutral-400">Please login to continue.</p>
-      </div>
-    );
+  if (!user?.id) {
+    redirect("/signin");
+  }
 
-  const todos = await getTodos(user.id);
+  const userId: string = user.id;
+  const todos = await getTodos(userId);
 
   const doneCount = todos.filter((t) => t.status === "DONE").length;
   const pendingCount = todos.length - doneCount;
