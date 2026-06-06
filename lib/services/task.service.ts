@@ -1,4 +1,4 @@
-import { CreateTaskInput } from "@/types/task.types";
+import { CreateTaskInput, ProjectTask } from "@/types/task.types";
 import { prisma } from "../db";
 import { TaskPriority, TaskStatus } from "@prisma/client";
 
@@ -14,7 +14,10 @@ export async function createTask(data: CreateTaskInput): Promise<void> {
   });
 }
 
-export async function getTasksByProjectId(projectId: string, userId: string) {
+export async function getTasksByProjectId(
+  projectId: string,
+  userId: string,
+): Promise<ProjectTask[]> {
   return prisma.task.findMany({
     where: {
       projectId,
