@@ -1,8 +1,8 @@
 import { ProjectStatus } from "@prisma/client";
 import { prisma } from "@/lib/db";
-import { CreateProjectInput } from "@/types/project.types";
+import { CreateProjectInput, GetProjects } from "@/types/project.types";
 
-export async function getProjects(userId: string) {
+export async function getProjects(userId: string): Promise<GetProjects[]> {
   const projects = await prisma.project.findMany({
     where: {
       userId,
