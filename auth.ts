@@ -3,6 +3,8 @@ import Credentials from "next-auth/providers/credentials";
 import { validateUserCredentials } from "./lib/services/auth.service";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
+
   providers: [
     Credentials({
       credentials: {
