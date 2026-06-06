@@ -205,10 +205,17 @@ export default function DashboardShell({
     };
   }, [mobileOpen]);
 
-  const currentPage =
-    NAV_LINKS.find((l) => l.href === pathname)?.label ??
-    NAV_LINKS.find((l) => pathname.startsWith(l.href))?.label ??
-    "Dashboard";
+  const getCurrentPage = () => {
+    if (pathname === "/dashboard") return "Dashboard";
+    if (pathname === "/dashboard/profile") return "Profile";
+    if (pathname === "/dashboard/projects") return "Projects";
+    if (pathname.startsWith("/dashboard/projects/")) return "Project Details";
+    if (pathname === "/dashboard/todos") return "Todos";
+    if (pathname.startsWith("/dashboard/todos")) return "Todos";
+    return "Dashboard";
+  };
+
+  const currentPage = getCurrentPage();
 
   const initials =
     user.name
