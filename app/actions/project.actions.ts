@@ -48,7 +48,7 @@ export async function updateProjectStatusAction(
   if (!validated.success) throw new Error("Invalid project status.");
 
   const user = await getCurrentUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user?.id) throw new Error("Unauthorized");
 
   await updateProjectStatus(projectId, user.id, validated.data.status);
   redirect(`/dashboard/projects/${projectId}`);
@@ -56,7 +56,7 @@ export async function updateProjectStatusAction(
 
 export async function deleteProjectAction(projectId: string) {
   const user = await getCurrentUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user?.id) throw new Error("Unauthorized");
 
   await deleteProject(projectId, user.id);
   redirect("/dashboard/projects");

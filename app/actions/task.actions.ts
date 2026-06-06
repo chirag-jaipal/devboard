@@ -47,7 +47,7 @@ export async function updateTaskStatusAction(
   if (!validated.success) throw new Error("Invalid task status.");
 
   const user = await getCurrentUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user?.id) throw new Error("Unauthorized");
 
   await updateTaskStatus(taskId, user.id, validated.data.status);
   redirect(`/dashboard/projects/${projectId}`);
@@ -66,7 +66,7 @@ export async function updateTaskPriorityAction(
   if (!validated.success) throw new Error("Invalid task priority.");
 
   const user = await getCurrentUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user?.id) throw new Error("Unauthorized");
 
   await updateTaskPriority(taskId, user.id, validated.data.priority);
   redirect(`/dashboard/projects/${projectId}`);
@@ -74,7 +74,7 @@ export async function updateTaskPriorityAction(
 
 export async function deleteTaskAction(taskId: string, projectId: string) {
   const user = await getCurrentUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user?.id) throw new Error("Unauthorized");
 
   await deleteTask(taskId, user.id);
   redirect(`/dashboard/projects/${projectId}`);
