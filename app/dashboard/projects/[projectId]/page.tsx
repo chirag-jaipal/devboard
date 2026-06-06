@@ -3,7 +3,7 @@ import { getProjectById } from "@/lib/services/project.service";
 import { getTasksByProjectId } from "@/lib/services/task.service";
 import { TaskCard } from "@/components/tasks/task-card";
 import { getCurrentUser } from "@/lib/auth";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { Plus, Zap } from "lucide-react";
 
@@ -17,12 +17,15 @@ export default async function ProjectDetailsPage({ params }: PageProps) {
   const { projectId } = await params;
 
   const user = await getCurrentUser();
-  if (!user) return <p>Please login to continue.</p>;
+  if (!user?.id) {
+    redirect("/signin");
+  }
 
-  const project = await getProjectById(projectId, user.id);
+  const userId: string = user.id;
+  const project = await getProjectById(projectId, userId);
   if (!project) notFound();
 
-  const tasks = await getTasksByProjectId(projectId, user.id);
+  const tasks = await getTasksByProjectId(projectId, userId);
 
   return (
     <div className="space-y-8">

@@ -3,12 +3,16 @@ import { getCurrentUser } from "@/lib/auth";
 import { getProjects } from "@/lib/services/project.service";
 import Link from "next/link";
 import { FolderKanban, Plus } from "lucide-react";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const user = await getCurrentUser();
-  if (!user) return <p>Please login to continue.</p>;
+  if (!user?.id) {
+    redirect("/signin");
+  }
 
-  const projects = await getProjects(user.id);
+  const userId: string = user.id;
+  const projects = await getProjects(userId);
 
   return (
     <div className="space-y-8">
