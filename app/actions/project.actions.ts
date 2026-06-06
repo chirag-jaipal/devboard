@@ -24,7 +24,7 @@ export async function createProjectAction(formData: FormData) {
     throw new Error("Please enter a valid project title.");
 
   const user = await getCurrentUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user?.id) throw new Error("Unauthorized");
 
   const projectData = {
     title: validated.data.title,
