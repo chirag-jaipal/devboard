@@ -1,5 +1,5 @@
 import { TaskStatus } from "@prisma/client";
-import { CreateTodoInput } from "@/types/todo.types";
+import { CreateTodoInput, GetTodos } from "@/types/todo.types";
 import { prisma } from "../db";
 
 export async function createTodo(data: CreateTodoInput) {
@@ -14,7 +14,7 @@ export async function createTodo(data: CreateTodoInput) {
   });
 }
 
-export async function getTodos(userId: string) {
+export async function getTodos(userId: string): Promise<GetTodos[]> {
   return prisma.todo.findMany({
     where: {
       userId,
