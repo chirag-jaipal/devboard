@@ -9,22 +9,21 @@ import { StatsGrid } from "@/components/dashboard/stats-grid";
 import { RecentProjects } from "@/components/dashboard/recent-projects";
 import { RecentTasks } from "@/components/dashboard/recent-tasks";
 import { RecentTodos } from "@/components/dashboard/recent-todos";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <p className="text-sm text-neutral-400">Please login to continue.</p>
-      </div>
-    );
+  if (!user?.id) {
+    redirect("/signin");
   }
 
+  const userId: string = user.id;
+
   const [stats, recentProjects, recentTasks, recentTodos] = await Promise.all([
-    getDashboardStats(user.id),
-    getRecentProjects(user.id),
-    getRecentTasks(user.id),
-    getRecentTodos(user.id),
+    getDashboardStats(userId),
+    getRecentProjects(userId),
+    getRecentTasks(userId),
+    getRecentTodos(userId),
   ]);
 
   return (
